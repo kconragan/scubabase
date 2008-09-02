@@ -1,0 +1,3 @@
+include scuba/config/deployment.ini_tmpl
+recursive-include scuba/public *
+recursive-include scuba/templates *

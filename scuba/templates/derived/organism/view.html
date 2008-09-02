@@ -1,0 +1,32 @@
+<%inherit file="/base/index.html"/>
+<%def name="title()">
+  ${c.content['name']}
+</%def> 
+<%def name="extrahead()">
+<link rel="stylesheet" href="${h.url_for('/css/freebase-controls.css')}" type="text/css" media="screen" />
+<script type="text/javascript" src="${h.url_for('/js/freebase.suggest.js')}"></script>
+<script type="text/javascript" src="${h.url_for('/js/common.js')}"></script>
+</%def>
+<h1>Name: ${c.content['name']}</h1>
+<img src="http://www.freebase.com/api/trans/image_thumb${c.content['/common/topic/image'][0]['id']}?maxheight=200&mode=fit&maxwidth=200" alt="photo of ${c.content['/common/topic/image'][0]['name']}" />
+<dl>
+  <dt>Higher Classification:</dt>
+  <dd>${c.content['higher_classification']}</dd>
+  <dt>Scientific Name:</dt>
+  <dd>${c.content['scientific_name']}</dd>
+</dl>
+
+<h3>Organisms related to ${c.content['name']}:</h3>
+
+<ul>
+% for organism in c.related:
+  % if not c.content['name'] == organism['name'][0]:
+    <li><a href="${h.format_guid(organism['guid'])}" title="View ${organism['name'][0]}">${organism['name'][0]}</a></li>
+  % endif
+% endfor
+</ul>
+
+<form action="/organism/view/" method="get" accept-charset="utf-8">
+  <input type="text" name="freebase-suggest" id="search-input" />
+  <p><input type="submit" value="Continue &rarr;"></p>
+</form>
